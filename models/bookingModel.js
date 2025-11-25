@@ -9,7 +9,7 @@ const bookingSchema = new mongoose.Schema({
   training: {
     type: mongoose.Schema.ObjectId,
     ref: "Training",
-    required: [true, 'A Booking must belong to a Tour.'],
+    required: [true, 'A Booking must belong to a Training.'],
   },
   price: {
     type: Number,

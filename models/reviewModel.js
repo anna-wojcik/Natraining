@@ -34,17 +34,17 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-reviewSchema.index({ tour: 1, user: 1 }, { unique: true }); // każda kombinacja tour i user musi być unikalna, jeden użytkownik będzie mógł dodać jedną opinię do jednej wycieczki
+reviewSchema.index({ training: 1, user: 1 }, { unique: true }); // każda kombinacja training i user musi być unikalna, jeden użytkownik będzie mógł dodać jedną opinię do jednej wycieczki
 
 reviewSchema.static.calcAverageRatings = async function (trainingId) {
   // this - current Model = Review
   const stats = await this.aggregate([
     {
-      $match: { tour: trainingId },
+      $match: { training: trainingId },
     },
     {
       $group: {
-        _id: "$tour",
+        _id: "$training",
         nRating: { $sum: 1 },
         avgRating: { $avg: "$rating" },
       },

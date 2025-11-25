@@ -89,7 +89,7 @@ const trainingSchema = new mongoose.Schema(
       type: String,
       required: [true, "A Training must have a end time"],
     },
-    secretTour: {
+    secretTraining: {
       type: Boolean,
       default: false,
     },
