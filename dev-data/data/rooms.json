@@ -1,0 +1,23 @@
+[
+  {
+    "_id": "5c88fa8cf4afda39709c296c",
+    "name": "Sala Główna",
+    "roomType": "Hall",
+    "capacity": 30,
+    "isAvailable": true
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2974",
+    "name": "Gym 1",
+    "roomType": "Gym",
+    "capacity": 20,
+    "isAvailable": true
+  },
+  {
+    "_id": "5c88fa8cf4afda39709c2970",
+    "name": "Kort Tenisowy",
+    "roomType": "Court",
+    "capacity": 4,
+    "isAvailable": true
+  }
+]
