@@ -3,6 +3,7 @@ const morgan = require("morgan");
 
 const trainingRouter = require("./routes/trainingRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
+const roomRouter = require("./routes/roomRoutes");
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use((req, res, next) => {
 
 app.use("/api/v1/trainings", trainingRouter);
 app.use("/api/v1/reviews", reviewRouter);
+app.use("/api/v1/rooms", roomRouter);
 
 module.exports = app;
