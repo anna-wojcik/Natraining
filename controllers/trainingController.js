@@ -1,10 +1,46 @@
 const Training = require("../models/trainingModel");
+const qs = require("qs");
 
 exports.getAllTrainings = async (req, res) => {
   try {
-    const trainings = await Training.find();
+    // Filtering
+    let queryObj = qs.parse(req.query);
+    let excludedFields = ["page", "sort", "limit", "fields"];
+    excludedFields.forEach((field) => delete queryObj[field]);
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(lte|lt|gte|gt)\b/g, (match) => `$${match}`);
+    queryObj = JSON.parse(queryStr);
 
-    // + Filtering
+    let query = Training.find(queryObj);
+
+    // Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // Fields limiting
+    if (req.query.fields) {
+      const limitedFields = req.query.fields.split(",").join(" ");
+      query = query.select(limitedFields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit * 1 || 10;
+    const skip = (page - 1) * limit;
+    query = query.skip(skip).limit(limit);
+
+    if (req.query.page) {
+      const numTrainings = await Training.countDocuments();
+      if (skip >= numTrainings) throw new Error("This page does not exist");
+    }
+
+    const trainings = await query;
 
     res.status(200).json({
       status: "success",
