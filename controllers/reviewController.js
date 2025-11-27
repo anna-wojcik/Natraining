@@ -1,16 +1,14 @@
-const Training = require("../models/trainingModel");
+const Review = require("../models/reviewModel");
 
-exports.getAllTrainings = async (req, res) => {
+exports.getAllReviews = async (req, res) => {
   try {
-    const trainings = await Training.find();
-
-    // + Filtering
+    const reviews = await Review.find();
 
     res.status(200).json({
       status: "success",
-      results: trainings.length,
+      results: reviews.length,
       data: {
-        trainings,
+        reviews,
       },
     });
   } catch (err) {
@@ -21,16 +19,16 @@ exports.getAllTrainings = async (req, res) => {
   }
 };
 
-exports.getTraining = async (req, res) => {
+exports.getReviews = async (req, res) => {
   try {
-    const training = await Training.findById(req.params.id);
+    const review = await Review.findById(req.params.id);
 
     // + Error handling
 
     res.status(200).json({
       status: "success",
       data: {
-        training,
+        review,
       },
     });
   } catch (err) {
@@ -41,14 +39,14 @@ exports.getTraining = async (req, res) => {
   }
 };
 
-exports.createTraining = async (req, res) => {
+exports.createReview = async (req, res) => {
   try {
-    const training = await Training.create(req.body);
+    const review = await Review.create(req.body);
 
     res.status(201).json({
       status: "success",
       data: {
-        training,
+        review,
       },
     });
   } catch (err) {
@@ -59,9 +57,9 @@ exports.createTraining = async (req, res) => {
   }
 };
 
-exports.updateTraining = async (req, res) => {
+exports.updateReview = async (req, res) => {
   try {
-    const training = await Training.findByIdAndUpdate(req.params.id, req.body, {
+    const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
@@ -71,7 +69,7 @@ exports.updateTraining = async (req, res) => {
     res.status(200).json({
       status: "success",
       data: {
-        training,
+        review,
       },
     });
   } catch (err) {
@@ -82,9 +80,9 @@ exports.updateTraining = async (req, res) => {
   }
 };
 
-exports.deleteTraining = async (req, res) => {
+exports.deleteReview = async (req, res) => {
   try {
-    await Training.findByIdAndDelete(req.params.id);
+    await Review.findByIdAndDelete(req.params.id);
 
     // + Error handling
 

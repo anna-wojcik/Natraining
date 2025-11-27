@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 
 const trainingRouter = require("./routes/trainingRoutes");
+const reviewRouter = require("./routes/reviewRoutes");
 
 const app = express();
 
@@ -23,5 +24,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1/trainings", trainingRouter);
+app.use("/api/v1/reviews", reviewRouter);
 
 module.exports = app;

@@ -36,7 +36,16 @@ const reviewSchema = new mongoose.Schema(
 
 reviewSchema.index({ training: 1, user: 1 }, { unique: true }); // każda kombinacja training i user musi być unikalna, jeden użytkownik będzie mógł dodać jedną opinię do jednej wycieczki
 
-reviewSchema.static.calcAverageRatings = async function (trainingId) {
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
+    select: '-__v',
+  });
+
+  next();
+});
+
+reviewSchema.statics.calcAverageRatings = async function (trainingId) {
   // this - current Model = Review
   const stats = await this.aggregate([
     {
@@ -64,12 +73,20 @@ reviewSchema.static.calcAverageRatings = async function (trainingId) {
   }
 };
 
+// Aktualizacja ratingsAverage przy dodaniu nowej opinii. 
 reviewSchema.post("save", function () {
   // this points to current review
   // this.constructor = Review (Model)
   this.constructor.calcAverageRatings(this.training);
 });
 
-const Review = mongoose.model("Review", reviewSchema);
+// // Aktualizacja ratingsAverage przy edytowaniu/usunięciu opinii.
+reviewSchema.post(/^findOneAnd/, async function (doc) {
+  // doc to dokument, który został zaktualizowany/usunięty
+  if (!doc) return;
 
+  await doc.constructor.calcAverageRatings(doc.training);
+});
+
+const Review = mongoose.model("Review", reviewSchema);
 module.exports = Review;

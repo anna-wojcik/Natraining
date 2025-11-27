@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
+const User = require("./userModel");
+const Room = require("./roomModel");
 
 const trainingSchema = new mongoose.Schema(
   {
@@ -118,13 +120,42 @@ const trainingSchema = new mongoose.Schema(
   }
 );
 
-// wirtualna referencja do reviews
+// Wirtual Reference
+trainingSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "training",
+});
 
 trainingSchema.pre("save", function (next) {
-  // this: to aktualnie przetwarzany dokument
+  // this - current document
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
 
-  next(); // wywłoanie kolejnego middlewara
+// QUERY MIDDLEWARE
+trainingSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "reviews",
+    select: "-__v",
+  });
+  next();
+});
+
+trainingSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "trainers",
+    select: "-__v -passwordChangedAt",
+  });
+  next();
+});
+
+trainingSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "room",
+    select: "-__v",
+  });
+  next();
 });
 
 const Training = mongoose.model("Training", trainingSchema);

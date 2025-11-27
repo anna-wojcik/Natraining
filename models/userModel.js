@@ -62,7 +62,7 @@ userSchema.pre("save", async function (next) {
 
   // hash() - funkcja asynchroniczna, więc trzeba dodać await i asnyc function
   // hash the password with cost of 12
-  this.password = await bcrypt(this.password, 12);
+  this.password = await bcrypt.hash(this.password, 12);
 
   // Delete passwordConfirm field
   this.passwordConfirm = undefined;
