@@ -1,105 +1,72 @@
 const Training = require("../models/trainingModel");
 const APIFeatures = require("../utils/apiFeatures");
+const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
-exports.getAllTrainings = async (req, res) => {
-  try {
-    const features = new APIFeatures(Training.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const trainings = await features.query;
+exports.getAllTrainings = catchAsync(async (req, res, next) => {
+  const features = new APIFeatures(Training.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const trainings = await features.query;
 
-    res.status(200).json({
-      status: "success",
-      results: trainings.length,
-      data: {
-        trainings,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: "success",
+    results: trainings.length,
+    data: {
+      trainings,
+    },
+  });
+});
 
-exports.getTraining = async (req, res) => {
-  try {
-    const training = await Training.findById(req.params.id);
+exports.getTraining = catchAsync(async (req, res, next) => {
+  const training = await Training.findById(req.params.id);
 
-    // + Error handling
+  if(!training) return next(new AppError('No training found with that ID', 404));
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        training,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: "success",
+    data: {
+      training,
+    },
+  });
+});
 
-exports.createTraining = async (req, res) => {
-  try {
-    const training = await Training.create(req.body);
+exports.createTraining = catchAsync(async (req, res, next) => {
+  const training = await Training.create(req.body);
 
-    res.status(201).json({
-      status: "success",
-      data: {
-        training,
-      },
-    });
-  } catch (err) {
-    res.status(401).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(201).json({
+    status: "success",
+    data: {
+      training,
+    },
+  });
+});
 
-exports.updateTraining = async (req, res) => {
-  try {
-    const training = await Training.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+exports.updateTraining = catchAsync(async (req, res, next) => {
+  const training = await Training.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-    // + Error handling
+  if(!training) return next(new AppError('No training found with that ID', 404));
 
-    res.status(200).json({
-      status: "success",
-      data: {
-        training,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: "success",
+    data: {
+      training,
+    },
+  });
+});
 
-exports.deleteTraining = async (req, res) => {
-  try {
-    await Training.findByIdAndDelete(req.params.id);
+exports.deleteTraining = catchAsync(async (req, res, next) => {
+  const training = await Training.findByIdAndDelete(req.params.id);
 
-    // + Error handling
-
-    res.status(204).json({
-      status: "success",
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err,
-    });
-  }
-};
+  if(!training) return next(new AppError('No training found with that ID', 404));
+  
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
