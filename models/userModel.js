@@ -70,12 +70,32 @@ userSchema.pre("save", async function (next) {
 });
 
 userSchema.pre("save", function (next) {
-  if(!this.isModified('password') || this.isNew) return next();
+  if (!this.isModified("password") || this.isNew) return next();
 
   // Jeżeli hasło zostało zmodyfikowane/ustawione lub zapisano dokument, ale dokument on nie jest nowy to:
   this.passwordChangedAt = Date.now() - 1000;
   next();
 });
+
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changePasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+    return changedTimestamp > JWTTimestamp;
+  }
+
+  // False means NOT changed
+  return false;
+};
 
 const User = mongoose.model("User", userSchema);
 
