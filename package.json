@@ -13,10 +13,13 @@
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "html-to-text": "^9.0.5",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^6.21.0",
     "mongoose": "^8.20.1",
     "morgan": "^1.10.1",
+    "nodemailer": "^7.0.12",
+    "pug": "^3.0.3",
     "qs": "^6.14.0",
     "slugify": "^1.6.6",
     "validator": "^13.15.23"

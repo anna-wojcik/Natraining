@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
 
@@ -16,6 +17,9 @@ if (process.env.NODE_ENV === "development") {
 
 // Body parser, reading data from the body into req.body
 app.use(express.json());
+
+app.set("view engine", "pug"); // template engine - pug
+app.set("views", path.join(__dirname, "views"));
 
 // app.use((req, res, next) => {
 //   console.log("Hello from the middleware");
