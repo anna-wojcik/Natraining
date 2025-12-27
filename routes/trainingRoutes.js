@@ -10,16 +10,24 @@ router.use("/:trainingId/reviews", reviewRouter);
 
 router
   .route("/")
-  .get(authController.protect, trainingController.getAllTrainings)
-  .post(trainingController.createTraining);
+  .get(trainingController.getAllTrainings)
+  .post(
+    authController.protect,
+    authController.restrictTo("admin"),
+    trainingController.createTraining
+  );
 
 router
   .route("/:id")
   .get(trainingController.getTraining)
-  .patch(trainingController.updateTraining)
+  .patch(
+    authController.protect,
+    authController.restrictTo("admin"),
+    trainingController.updateTraining
+  )
   .delete(
     authController.protect,
-    authController.restrictTo("trainer","admin"),
+    authController.restrictTo("admin"),
     trainingController.deleteTraining
   );
 
