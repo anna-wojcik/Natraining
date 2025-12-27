@@ -4,7 +4,9 @@ const AppError = require("../utils/appError");
 const Training = require("../models/trainingModel");
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  let filter = {};
+  if (req.params.trainingId) filter = { training: req.params.trainingId };
+  const reviews = await Review.find(filter);
 
   res.status(200).json({
     status: "success",
