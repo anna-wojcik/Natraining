@@ -1,6 +1,7 @@
 const path = require("path");
 const express = require("express");
 const morgan = require("morgan");
+const rateLimit = require("express-rate-limit");
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -14,6 +15,13 @@ const app = express();
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+const limiter = rateLimit({
+  max: 100, // max 100 request
+  windowMs: 60 * 60 * 1000, // in 1 hour
+  message: "Too many request from this IP. Please try again in an hour.",
+});
+app.use("/api", limiter); // limiter works only if URL contains /api
 
 // Body parser, reading data from the body into req.body
 app.use(express.json());
