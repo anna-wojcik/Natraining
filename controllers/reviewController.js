@@ -2,65 +2,59 @@ const Review = require("../models/reviewModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const Training = require("../models/trainingModel");
+const factory = require("./handlerFactory");
 
-exports.getAllReviews = catchAsync(async (req, res, next) => {
-  let filter = {};
-  if (req.params.trainingId) filter = { training: req.params.trainingId };
-  const reviews = await Review.find(filter);
+const checkOwnerOrAdmin = (review, user) => {
+  const isOwner = review.user._id.toString() === user.id;
+  const isAdmin = user.role === "admin";
+  return isOwner || isAdmin;
+};
 
-  res.status(200).json({
-    status: "success",
-    results: reviews.length,
-    data: {
-      reviews,
-    },
-  });
-});
-
-exports.getReviews = catchAsync(async (req, res, next) => {
-  const review = await Review.findById(req.params.id);
-
-  if (!review) return next(new AppError("No review found with that ID", 404));
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      review,
-    },
-  });
-});
-
-exports.createReview = catchAsync(async (req, res, next) => {
-  const review = await Review.create(req.body);
-
-  res.status(201).json({
-    status: "success",
-    data: {
-      review,
-    },
-  });
-});
+exports.getAllReviews = factory.getAll(Review);
+exports.getReview = factory.getOne(Review);
+exports.createReview = factory.createOne(Review);
 
 exports.updateReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const review = await Review.findById(req.params.id);
+  if (!review) return next(new AppError("No review found with that ID", 404));
+
+  if (!checkOwnerOrAdmin(review, req.user)) {
+    return next(
+      new AppError("You do not have permission to perform this action.", 403)
+    );
+  }
+  const reviewUpdated = await Review.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!review) return next(new AppError("No review found with that ID", 404));
 
   res.status(200).json({
     status: "success",
     data: {
-      review,
+      data: reviewUpdated,
     },
   });
 });
 
 exports.deleteReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findByIdAndDelete(req.params.id);
-
+  const review = await Review.findById(req.params.id);
   if (!review) return next(new AppError("No review found with that ID", 404));
+
+  if (!checkOwnerOrAdmin(review, req.user)) {
+    return next(
+      new AppError("You do not have permission to perform this action.", 403)
+    );
+  }
+
+  const reviewDeleted = await Review.findByIdAndDelete(req.params.id);
+
+  if (!reviewDeleted) return next(new AppError("No review found with that ID", 404));
 
   res.status(204).json({
     status: "success",
@@ -72,9 +66,9 @@ exports.setTrainingUserIds = catchAsync(async (req, res, next) => {
   if (!req.body.training) req.body.training = req.params.trainingId;
   if (!req.body.user) req.body.user = req.user.id;
 
-  if (!(await Training.findById(req.params.trainingId))) {
+  if (!(await Training.findById(req.body.training))) {
     return next(
-      AppError(
+      new AppError(
         "Can not add review to this training. Training with that ID does not exists!",
         404
       )
