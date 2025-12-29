@@ -1,0 +1,47 @@
+extends base
+
+include _trainingCardTemplate
+
+block content 
+  main.main 
+    .hero
+      h2.hero-primary Book your training
+      p.hero-description Choose from a variety of training sessions led by experienced trainers
+    
+    section.filters-container 
+      form.filters-form
+        .filters-box 
+          .filters-group 
+            label.filters-label(for="trainingType") Dyscyplina
+            select#trainingType.filter-select
+              option(value="all") All 
+              option(value="Football") Football
+              option(value="Volleyball") Volleyball
+              option(value="Handball") Handball
+              option(value="Basketball") Basketball
+              option(value="Tennis") Tennis
+              option(value="Hockey") Hockey
+
+          .filters-group 
+            label.filters-label(for="level") Level
+            select#level.filter-select
+              option(value="all") All 
+              option(value="Beginer") Beginer
+              option(value="Intermediate") Intermediate
+              option(value="Advanced") Advanced
+            
+          .filters-group 
+            label.filters-label(for="price") Price
+            select#price.filter-select
+              option(value="all") All 
+              option(value="$lte: 30")= `0 - 30`
+              option(value="")= `31 - 60`
+              option(value="")= `61 and more`
+          .filters-group
+            label.filters-label(for="name") Search
+            input#name.filter-select(type='text' placeholder="Training name")
+        input.filters-submit(type="submit" value='Apply filters') 
+    
+    .card-container 
+      each training in trainings
+        +trainingCard(training)

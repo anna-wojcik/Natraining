@@ -1,0 +1,25 @@
+mixin trainingCard(training)
+  .card 
+    .card__box
+      .card__header
+        img.card__img-discipline(src=`/img/${training.trainingType}.svg` alt=`${training.trainingType}`)
+        h2.card__title #{training.name}
+        p(class=`card__level card__level--${training.level.toLowerCase()}`) #{training.level}
+      p.card__text #{training.summary}
+      .card__data 
+        .card__subBox 
+          img.card__icon(src=`/img/clock.svg` alt='clock icon')
+          span= `${training.startTime} - ${training.endTime}`
+        .card__subBox 
+          img.card__icon(src=`/img/people.svg` alt='people icon')
+          span= `0/${training.maxGroupSize}`
+        .card__subBox 
+          img.card__icon(src=`/img/timer.svg` alt='people icon')
+          span= `0/${training.duration} min`
+    .card__box.card__box--right
+      p.card__price= `${training.price} $`
+      a.card__btn(href=`/training/${training.slug}`) Check the details 
+      
+
+
+
