@@ -16,6 +16,9 @@ mixin trainingCard(training)
         .card__subBox 
           img.card__icon(src=`/img/timer.svg` alt='people icon')
           span= `${training.duration} min`
+        .card__subBox 
+          img.card__icon(src=`/img/star.svg` alt='star icon')
+          span= `${training.ratingsAverage}/5`
     .card__box.card__box--right
       p.card__price= `${training.price} $`
       a.card__btn(href=`/training/${training.slug}`) Check the details 

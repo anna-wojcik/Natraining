@@ -373,6 +373,10 @@ body {
   }
   .card__data  {
     gap: 16px;
+    flex-wrap: wrap;
+  }
+  .card__subBox {
+    font-size: 12px;
   }
   .card__price {
     font-size: 24px;
