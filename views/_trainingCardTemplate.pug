@@ -15,7 +15,7 @@ mixin trainingCard(training)
           span= `0/${training.maxGroupSize}`
         .card__subBox 
           img.card__icon(src=`/img/timer.svg` alt='people icon')
-          span= `0/${training.duration} min`
+          span= `${training.duration} min`
     .card__box.card__box--right
       p.card__price= `${training.price} $`
       a.card__btn(href=`/training/${training.slug}`) Check the details 
