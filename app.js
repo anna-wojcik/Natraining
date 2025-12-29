@@ -70,7 +70,7 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-app.get("/", viewRouter);
+app.use("/", viewRouter);
 
 app.use("/api/v1/trainings", trainingRouter);
 app.use("/api/v1/reviews", reviewRouter);
