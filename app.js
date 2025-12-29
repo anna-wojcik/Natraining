@@ -13,8 +13,15 @@ const trainingRouter = require("./routes/trainingRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const roomRouter = require("./routes/roomRoutes");
 const userRouter = require("./routes/userRoutes");
+const viewRouter = require("./routes/viewRoutes");
 
 const app = express();
+
+app.set("view engine", "pug"); // template engine - pug
+app.set("views", path.join(__dirname, "views"));
+
+// Serving static files
+app.use(express.static(path.join(__dirname, "public")));
 
 // Set Security HTTP headers
 app.use(helmet());
@@ -55,15 +62,15 @@ app.use(
   })
 );
 
-app.set("view engine", "pug"); // template engine - pug
-app.set("views", path.join(__dirname, "views"));
-
 // Test middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   // console.log(req.body);
   next();
 });
+
+// ROUTES
+app.get("/", viewRouter);
 
 app.use("/api/v1/trainings", trainingRouter);
 app.use("/api/v1/reviews", reviewRouter);
