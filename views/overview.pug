@@ -34,9 +34,9 @@ block content
             label.filters-label(for="price") Price
             select#price.filter-select
               option(value="all") All 
-              option(value="$lte: 30")= `0 - 30`
-              option(value="")= `31 - 60`
-              option(value="")= `61 and more`
+              option(value="[lte]=50")= `0 - 50`
+              option(value="[gte]=50,[lte]=100")= `50 - 100`
+              option(value="[gte]=100")= `100 and more`
           .filters-group
             label.filters-label(for="name") Search
             input#name.filter-select(type='text' placeholder="Training name")
