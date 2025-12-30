@@ -1,0 +1,75 @@
+extends base
+include _reviewCard
+
+mixin infoBox(icon, label, text)
+  .info-box 
+    .info-box__icon-wrapper 
+      img.info-box__icon(src=`/img/${icon}.svg`)
+      span= label 
+    span.info-box__text= text
+
+block content 
+  main.main
+    div
+      h2.heading-secondary Training details
+      .heading-underline
+    .training-view   
+      .training-view__content
+        .training-header
+          .training-header-box
+            img.training-icon(src=`/img/${training.trainingType}.svg` alt=`${training.trainingType}`)
+            h1.heading-primary= training.name
+          p.training-summary= training.description
+        
+        .info-grid
+          +infoBox('timer', 'Duration', `${training.duration} minutes`)
+          +infoBox('people', 'Number of participants', `Maximum ${training.maxGroupSize} people`)
+          - const date = training.startDates[0].toLocaleDateString('pl-PL')
+          +infoBox('calendare', 'Date and time', `${date}, ${training.startTime} -  ${training.endTime}`)
+          +infoBox('level', 'Level', training.level)
+        
+        if training.trainers && training.trainers.length > 0
+          .trainers-view 
+            h3.heading-tertiary Trainers
+            each trainer in training.trainers
+              .trainer-card 
+                img.trainer-img(src=`/img/users/${trainer.photo}` alt=`${trainer.name}`)
+                .trainer-info 
+                  span.trainer-name= trainer.name 
+                  span.trainer-role= `${trainer.role.toUpperCase()}` 
+          
+        if training.reviews && training.reviews.length > 0
+          .reviews-view
+            h3.heading-tertiary Opinions of the participants
+            each review in training.reviews 
+              +reviewCard(review)
+
+      .training-sidebar
+        .booking-card 
+          .booking-card__price-box
+            span.booking-card__price= `${training.price} $`
+            span per person
+          .booking-card__details 
+            .booking-detail-row 
+              span Available tickets:
+              span.booking-detail-highlight= `${training.maxGroupSize} of ${training.maxGroupSize}`
+            .booking-detail-row 
+              span Review score:
+              .booking-rating 
+                img.booking-star(src=`/img/star.svg` alt="star")
+                span= `${training.ratingsAverage}/5`
+          if user 
+            button.booking__btn#book-training Book training 
+          else 
+            a.booking__btn(href='/login') Log in to <br/> book training
+          
+        
+
+                
+
+
+
+
+            
+
+    

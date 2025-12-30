@@ -1,0 +1,10 @@
+mixin reviewCard(review)
+  .review-card 
+    img.review-user-img(src=`/img/users/${review.user.photo}`)
+    .review-info 
+      .review-heading 
+        span= review.user.name 
+        .review-rating 
+          each star in [1, 2, 3, 4, 5]
+            img.review-star(src=`/img/star${training.ratingsAverage >= star ? '' : 'Inactive'}.svg` alt="star")
+      p.review-description= review.review

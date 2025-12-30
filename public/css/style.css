@@ -8,7 +8,7 @@ html {
 
 body {
   font-family: "Poppins", "sans-serif";
-  background: rgb(248, 248, 248);
+  background: rgb(239, 244, 251);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -52,14 +52,6 @@ body {
   width: 60px;
 }
 
-.nav__el-logo:hover {
-  color: #4C98EF;
-}
-
-.nav__el-logo:active {
-  color: #2188FF;
-}
-
 .nav__user {
   display: flex;
   justify-content: space-between;
@@ -98,11 +90,11 @@ body {
 }
 
 .nav__el:hover {
-  box-shadow: inset 0px 0px 3px 0px rgb(33, 46, 163);
+  background: hsl(212, 77%, 41%);
 }
 
 .nav__el:active {
-  box-shadow: inset 0px 0px 3px 0px rgb(1, 1, 2);
+  background: hsl(212, 78%, 30%);
 }
 
 .nav__el--logout {
@@ -182,10 +174,10 @@ body {
   font-size: 16px;
 }
 .filters-submit:hover {
-  box-shadow: inset 0px 0px 3px 0px rgb(33, 46, 163);
+  background: hsl(212, 77%, 41%);
 }
 .filters-submit:active {
-  box-shadow: inset 0px 0px 3px 0px rgb(1, 1, 2);
+  background: hsl(212, 78%, 30%);
 }
 
 .card-container {
@@ -287,10 +279,239 @@ body {
   text-align: center;
 }
 .card__btn:hover {
-  box-shadow: inset 0px 0px 3px 0px rgb(33, 46, 163);
+  background: hsl(212, 77%, 41%);
 }
 .card__btn:active {
-  box-shadow: inset 0px 0px 3px 0px rgb(1, 1, 2);
+  background: hsl(212, 78%, 30%);
+}
+
+/* TRAINING */
+.heading-secondary {
+  margin: 10px 0;
+  padding-bottom: 10px;
+  font-size: 24px;
+  font-size: 500;
+  color: #252525;
+}
+.heading-underline {
+  height: 2px;
+  background-color: rgba(33, 136, 255, 1);
+  background-image: linear-gradient(90deg, rgba(33, 136, 255, 1) 0%, rgba(41, 53, 86, 1) 100%);
+}
+.training-view {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  column-gap: 30px;
+}
+.training-view__content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.training-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.training-header-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.training-icon {
+  height: 24px;
+  width: 24px;
+}
+.heading-primary {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: #252525;
+
+}
+.training-summary {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #252525;
+}
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.info-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: white;
+  padding: 20px;
+  font-size: 14px;
+  color: #252525;
+  border-radius: 10px;
+  box-shadow: -6px 6px 12px -10px rgba(90, 91, 109, 1);
+}
+.info-box__icon-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.info-box__icon {
+  height: 20px;
+  width: 20px;
+}
+.info-box__text {
+  color: #868686;
+}
+.trainers-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.heading-tertiary {
+  margin: 0;
+  margin-bottom: 10px;
+  font-weight: 500;
+  font-size: 18px;
+}
+.trainer-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.trainer-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 40px;
+  box-shadow: -6px 6px 12px -10px rgba(90, 91, 109, 1);
+}
+.trainer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 16px;
+  color: #252525;
+}
+.trainer-name {
+  font-weight: 500;
+}
+.trainer-role {
+  color: #868686;
+}
+.reviews-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.review-card {
+  display: flex;
+  background: white;
+  box-shadow: 0px 0px 12px -6px rgba(90, 91, 109, 1);
+  border-radius: 10px;
+  padding: 10px;
+  gap: 10px;
+  min-height: 80px;
+}
+.review-user-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+.review-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.review-heading  {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #252525;
+  font-size: 14px;
+}
+.review-rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.review-star {
+  width: 16px;
+  height: 16px;
+}
+.review-description {
+  margin: 0;
+  font-weight: 300;
+  color: #555555;
+  font-size: 14px;
+}
+.training-sidebar {
+  margin-top: 20px;
+}
+.booking-card  {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: -6px 6px 12px -10px rgba(90, 91, 109, 1);
+}
+.booking-card__price-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  color: #868686;  
+}
+.booking-card__price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #2188FF;
+}
+.booking-card__details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 16px;
+  color: #868686; 
+}
+.booking-detail-row {
+  display: flex;
+  justify-content: space-between;
+}
+.booking-detail-highlight {
+  color: rgb(30, 220, 8);
+  font-weight: 500;
+}
+.booking-rating {
+  display: flex;
+  gap: 2px;
+}
+.booking-star {
+  width: 16px;
+  height: 16px;
+}
+.booking__btn {
+  height: 50px;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  background: #2188FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+  font-size: 16px;
+  font-weight: 500;
+}
+.booking__btn:hover {
+  background: hsl(212, 77%, 41%);
+}
+.booking__btn:active {
+  background: hsl(212, 78%, 30%);
 }
 
 @media(max-width: 1400px) {
@@ -384,6 +605,149 @@ body {
   .card__btn {
     height: 32px;
     font-size: 14px;
+  }
+
+  /* TRAINING PAGE */
+  .heading-secondary {
+    margin: 8px 0;
+    padding-bottom: 8px;
+    font-size: 20px;
+  }
+  .heading-underline {
+    /* height: 2px; */
+  }
+  .training-view {
+    column-gap: 20px;
+  }
+  .training-view__content {
+    gap: 20px;
+  }
+  .training-header {
+    /* gap: 10px; */
+  }
+  .training-header-box {
+    /* gap: 10px; */
+  }
+  .training-icon {
+    height: 22px;
+    width: 22px;
+  }
+  .heading-primary {
+    font-size: 22px;
+    font-weight: 600;
+  }
+  .training-summary {
+    font-size: 14px;
+  }
+  .info-grid {
+    gap: 15px;
+  }
+  .info-box {
+    gap: 8px;
+    padding: 16px;
+  }
+  .info-box__icon-wrapper {
+    gap: 8px;
+  }
+  .info-box__icon {
+    height: 18px;
+    width: 18px;
+  }
+  .trainers-view {
+    gap: 8px;
+  }
+  .heading-tertiary {
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  .trainer-card {
+    gap: 8px;
+  }
+  .trainer-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+  }
+  .trainer-info {
+    /* gap: 4px; */
+    font-size: 14px;
+  }
+  .trainer-name {
+    /* font-weight: 500; */
+  }
+  .reviews-view {
+    gap: 8px;
+  }
+  .review-card {
+    padding: 8px;
+    gap: 8px;
+    min-height: 70px;
+  }
+  .review-user-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+  }
+  .review-info {
+    gap: 8px;
+  }
+  .review-heading  {
+    gap: 8px;
+    font-size: 14px;
+  }
+  .review-rating {
+    /* gap: 2px; */
+  }
+  .review-star {
+    width: 14px;
+    height: 14px;
+  }
+  .review-description {
+    font-size: 13px;
+  }
+  .training-sidebar {
+    /* margin-top: 20px; */
+  }
+  .booking-card  {
+    gap: 20px;
+    padding: 20px;
+  }
+  .booking-card__price-box {
+    gap: 8px;
+    font-size: 14px;
+  }
+  .booking-card__price {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .booking-card__details {
+    gap: 8px;
+    font-size: 14px;
+  }
+  .booking-detail-highlight {
+    /* font-weight: 500; */
+  }
+  .booking-rating {
+    /* gap: 2px; */
+  }
+  .booking-star {
+    width: 14px;
+    height: 14px;
+  }
+  .booking__btn {
+    height: 45px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 400;
+  }
+}
+
+@media(max-width: 940px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+  .training-view {
+    grid-template-columns: 1fr 1fr;
   }
 }
 
@@ -510,5 +874,130 @@ body {
     padding: 4px 8px;
     font-size: 12px;
   }
-}
 
+  /* TRAINING PAGE */
+  .heading-secondary {
+    margin: 6px 0;
+    padding-bottom: 6px;
+    font-size: 16px;
+  }
+  .heading-underline {
+    height: 1px;
+  }
+  .training-view {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 20px;
+  }
+  .training-view__content {
+    gap: 10px;
+  }
+  .training-header {
+    gap: 8px;
+  }
+  .training-header-box {
+    gap: 8px;
+  }
+  .training-icon {
+    height: 18px;
+    width: 18px;
+  }
+  .heading-primary {
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .training-summary {
+    font-size: 12px;
+  }
+  .info-grid {
+    gap: 8px;
+  }
+  .info-box {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .info-box__icon-wrapper {
+    gap: 6px;
+  }
+  .info-box__icon {
+    height: 14px;
+    width: 14px;
+  }
+  .trainers-view {
+    gap: 8px;
+  }
+  .heading-tertiary {
+    margin: 6px 0;
+    font-size: 14px;
+  }
+  .trainer-card {
+    gap: 6px;
+  }
+  .trainer-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+  }
+  .trainer-info {
+    gap: 2px;
+    font-size: 12px;
+  }
+  .trainer-name {
+    font-weight: 400;
+  }
+  .reviews-view {
+    gap: 6px;
+  }
+  .review-user-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+  }
+  .review-info {
+    gap: 6px;
+  }
+  .review-heading  {
+    gap: 6px;
+    font-size: 12px;
+  }
+  .review-rating {
+    gap: 1px;
+  }
+  .review-star {
+    width: 12px;
+    height: 12px;
+  }
+  .review-description {
+    font-size: 12px;
+  }
+  .training-sidebar {
+    margin-top: 10px;
+  }
+  .booking-card  {
+    gap: 10px;
+  }
+  .booking-card__price-box {
+    gap: 6px;
+    font-size: 12px;
+  }
+  .booking-card__price {
+    font-size: 18px;
+  }
+  .booking-card__details {
+    gap: 6px;
+    font-size: 12px;
+  }
+  .booking-detail-highlight {
+    font-weight: 400;
+  }
+  .booking-star {
+    width: 12px;
+    height: 12px;
+  }
+  .booking__btn {
+    height: 36px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
