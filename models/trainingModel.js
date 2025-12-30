@@ -127,6 +127,12 @@ trainingSchema.virtual("reviews", {
   foreignField: "training",
 });
 
+// trainingSchema.virtual("bookings", {
+//   ref: "Booking",
+//   localField: "_id",
+//   foreignField: "training",
+// });
+
 trainingSchema.pre("save", function (next) {
   // this - current document
   this.slug = slugify(this.name, { lower: true });
