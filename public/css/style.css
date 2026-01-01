@@ -661,6 +661,69 @@ body {
   background-color: #eb4d4b;
 }
 
+/* FOOTER */
+.footer {
+  margin-top: 100px;
+  background: #373737;
+  padding: 30px 100px;
+  display: flex;
+  gap: 30px;
+}
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 24px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #2188FF;
+  width: fit-content;
+}
+.footer__logo-img {
+  height: 40px;
+  width: 40px;
+}
+.footer__box {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+.footer__nav {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.footer__nav li a {
+  color: white;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 300;
+}
+.footer__nav li a:hover {
+  text-decoration: underline;
+}
+.footer__copyright {
+  color: white;
+  font-size: 16px;
+  font-weight: 300;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+.footer__copyright p {
+  margin: 0;
+}
+.footer__author {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 @media(max-width: 1400px) {
   .header {
     height: 70px;
@@ -863,6 +926,32 @@ body {
     border-radius: 10px;
     font-size: 14px;
     font-weight: 400;
+  }
+  /* FOOTER */
+  .footer {
+    margin-top: 70px;
+    padding: 30px 50px;
+  }
+  .footer__logo {
+    gap: 6px;
+    font-size: 20px;
+  }
+  .footer__logo-img {
+    height: 30px;
+    width: 30px;
+  }
+  .footer__box {
+    gap: 15px;
+  }
+  .footer__nav {
+    gap: 6px;
+  }
+  .footer__nav li a {
+    font-size: 14px;
+  }
+  .footer__copyright {
+    font-size: 14px;
+    gap: 10px;
   }
 }
 
@@ -1204,5 +1293,33 @@ body {
   .login-link {
     font-size: 12px;
     text-decoration: underline;
+  }
+  /* FOOTER */
+  .footer {
+    margin-top: 50px;
+    padding: 20px;
+    flex-direction: column;
+    gap: 15px;
+  }
+  .footer__logo {
+    gap: 4px;
+    font-size: 16px;
+  }
+  .footer__logo-img {
+    height: 25px;
+    width: 25px;
+  }
+  .footer__box {
+    gap: 12px;
+  }
+  .footer__nav {
+    gap: 4px;
+  }
+  .footer__nav li a {
+    font-size: 12px;
+  }
+  .footer__copyright {
+    font-size: 12px;
+    gap: 20px;
   }
 }
