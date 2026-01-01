@@ -101,7 +101,13 @@ body {
 }
 
 .nav__el--logout {
-  background: #868686;
+  background: hsl(0, 0%, 53%);
+}
+.nav__el--logout:hover {
+  background: hsl(0, 0%, 60%);
+}
+.nav__el--logout:active {
+  background: hsl(0, 0%, 65%);
 }
 
 /* OVERVIEW */
@@ -872,6 +878,15 @@ body {
     font-weight: 400;
     height: 24px;
     padding: 0 10px;
+  }
+  .nav__el--logout {
+  background: white;
+  }
+  .nav__el--logout:hover {
+    background: white;
+  }
+  .nav__el--logout:active {
+    background: none;
   }
   .nav__text {
     display: none;
