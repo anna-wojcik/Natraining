@@ -1,0 +1,32 @@
+extends base
+
+block content 
+  main.main.main--login
+    .login-form 
+      .login-header
+        img.login-icon(src='/img/sportCenter-logo.png' alt='SportCenter logo')
+        h2.login-logo SportCenter
+        p.login-text Create new account
+      form.auth-form.form--signup 
+        .form__group 
+          label.form__label(for="name") Fullname *
+          input.form__input#name(type="text" name="name" placeholder="Jan Kowalski" required)
+          span.form__error.hidden.fullname-error Fullname must be in range 3-40 characters
+        .form__group 
+          label.form__label(for="email") Email *
+          input.form__input#email(type="text" name="email" placeholder="jan.kowalski@example.com" required)
+          span.form__error.hidden.email-error Please provide a valid email address
+        .form__group 
+          label.form__label(for="password") Password *
+          input.form__input#password(type="password" name="password" placeholder="••••••••" required)
+          span.form__error.hidden.password-error Password must be at least 8 characters
+        .form__group 
+          label.form__label(for="passwordConfirm") Password confirm *
+          input.form__input#passwordConfirm(type="password" name="passwordConfirm" placeholder="••••••••" required)
+          span.form__error.hidden.passwordConfirm-error Password confirm must be the same as password
+        span.form__error.hidden.user-error User with provided email already exist
+        .form__group 
+          button.form-button Sign up
+      .login-footer
+        span You already have account ?
+        a.login-link(href="/login") Log in

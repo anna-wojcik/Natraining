@@ -514,6 +514,118 @@ body {
   background: hsl(212, 78%, 30%);
 }
 
+/* LOGIN PAGE */
+.main--login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 80px);
+}
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: white;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 15px;
+  width: 500px;
+  padding: 30px;
+}
+.login-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.login-icon {
+  width: 70px;
+  height: 70px;
+}
+.login-logo {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #252525;
+}
+.login-text {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: #868686;
+}
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.form__label {
+  font-size: 16px;
+  color: #252525;
+}
+.form__input {
+  background: hwb(0 93% 7%);
+  color: #373737;
+  border-radius: 5px;
+  border: 1px solid hwb(0 93% 7%);
+  padding: 5px 10px;
+  height: 35px;
+  font-size: 14px;
+  transition: border-color 0.2s ease-in-out;
+}
+.form__input:focus {
+  border-color: #b5b5b5;
+  outline: none;
+} 
+.form__input:hover {
+  border-color: #b5b5b5;
+}
+.form__error {
+  font-size: 12px;
+  color: red;
+}
+.hidden {
+  display: none;
+}
+.form-button {
+  background: #252525;
+  color: white;
+  font-weight: 600;
+  border-radius: 5px;
+  padding: 5px 10px;
+  height: 35px;
+  font-size: 14px;
+  margin-top: 10px;
+  border: none;
+  transition: border-color 0.2s ease-in-out;
+}
+.form-button:hover {
+  background: hsl(0, 0%, 20%);
+}
+.form-button:active {
+  background: hsl(0, 0%, 25%);
+}
+.login-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+.login-link {
+  font-size: 14px;
+  color: #0d4de4;
+  text-decoration: none;
+}
+.login-link:hover {
+  text-decoration: underline;
+}
+
 @media(max-width: 1400px) {
   .header {
     height: 70px;
@@ -613,20 +725,11 @@ body {
     padding-bottom: 8px;
     font-size: 20px;
   }
-  .heading-underline {
-    /* height: 2px; */
-  }
   .training-view {
     column-gap: 20px;
   }
   .training-view__content {
     gap: 20px;
-  }
-  .training-header {
-    /* gap: 10px; */
-  }
-  .training-header-box {
-    /* gap: 10px; */
   }
   .training-icon {
     height: 22px;
@@ -672,9 +775,6 @@ body {
     /* gap: 4px; */
     font-size: 14px;
   }
-  .trainer-name {
-    /* font-weight: 500; */
-  }
   .reviews-view {
     gap: 8px;
   }
@@ -695,18 +795,12 @@ body {
     gap: 8px;
     font-size: 14px;
   }
-  .review-rating {
-    /* gap: 2px; */
-  }
   .review-star {
     width: 14px;
     height: 14px;
   }
   .review-description {
     font-size: 13px;
-  }
-  .training-sidebar {
-    /* margin-top: 20px; */
   }
   .booking-card  {
     gap: 20px;
@@ -723,12 +817,6 @@ body {
   .booking-card__details {
     gap: 8px;
     font-size: 14px;
-  }
-  .booking-detail-highlight {
-    /* font-weight: 500; */
-  }
-  .booking-rating {
-    /* gap: 2px; */
   }
   .booking-star {
     width: 14px;
@@ -999,5 +1087,65 @@ body {
     border-radius: 10px;
     font-size: 12px;
     font-weight: 400;
+  }
+
+  /* LOGIN PAGE */
+  .main--login {
+    justify-content: flex-start;
+    min-height: auto;
+    padding: 0;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .login-form {
+    gap: 10px;
+    border-radius: 0;
+    width: 100%;
+    padding: 20px;
+  }
+  .login-header {
+    gap: 4px;
+  }
+  .login-icon {
+    width: 40px;
+    height: 40px;
+  }
+  .login-logo {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .login-text {
+    font-size: 14px;
+  }
+  .form__group {
+    gap: 4px;
+  }
+  .form__label {
+    font-size: 14px;
+  }
+  .form__input {
+    border-radius: 4px;
+    padding: 3px 6px;
+    height: 30px;
+    font-size: 12px;
+  }
+  .form__error {
+    font-size: 10px;
+  }
+  .form-button {
+    border-radius: 4px;
+    padding: 3px 6px;
+    height: 30px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-top: 5px;
+  }
+  .login-footer {
+    gap: 2px;
+    font-size: 12px;
+  }
+  .login-link {
+    font-size: 12px;
+    text-decoration: underline;
   }
 }

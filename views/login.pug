@@ -1,0 +1,25 @@
+extends base
+
+block content 
+  main.main.main--login
+    .login-form 
+      .login-header
+        img.login-icon(src='/img/sportCenter-logo.png' alt='SportCenter logo')
+        h2.login-logo SportCenter
+        p.login-text Log into your account
+      form.auth-form.form--login
+        .form__group 
+          label.form__label(for="email") Email *
+          input.form__input#email(type="text" name="email" placeholder="jan.kowalski@example.com" required)
+          span.form__error.hidden.email-error Please provide a valid email address
+        .form__group 
+          label.form__label(for="password") Password *
+          input.form__input#password(type="password" name="password" placeholder="••••••••" required)
+          span.form__error.hidden.password-error Password must be at least 8 characters
+        span.form__error.hidden.user-error Invalid email or password
+        a.login-link(href="#") Forgot the password
+        .form__group 
+          button.form-button Log in
+      .login-footer
+        span You don't have account ?
+        a.login-link(href="/signup") Sign up
