@@ -635,6 +635,29 @@ body {
   text-decoration: underline;
 }
 
+/* ALERT */
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding: 12px 75px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+.alert--success {
+  background-color: #20bf6b;
+}
+.alert--error {
+  background-color: #eb4d4b;
+}
+
 @media(max-width: 1400px) {
   .header {
     height: 70px;
