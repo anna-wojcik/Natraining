@@ -21,7 +21,7 @@ const createSendToken = (user, statusCode, req, res) => {
     httpOnly: true,
   };
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
-  
+
   res.cookie("jwt", token, cookieOptions);
 
   // Remove password from the output - not from database
@@ -76,6 +76,8 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith("Bearer")
   ) {
     token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
   }
 
   if (!token) {
@@ -154,7 +156,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       validateBeforeSave: false,
     });
 
-    console.log(err);
     return next(
       new AppError(
         "There was an error sending the email. Try again later!",
@@ -208,4 +209,32 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 4) Log user in, send JWT
   createSendToken(user, 200, req, res);
+});
+
+// Only for rendered pages, no errors
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // 1) Verification token
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // 2) Check if user still exists
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next();
+    }
+
+    // 3) Check if user changed password after the token (JWT) was issued
+    if (currentUser.changePasswordAfter(decoded.iat)) {
+      return next();
+    }
+
+    // THERE IS A LOGGED IN USER
+    res.locals.user = currentUser;
+    next();
+  } else {
+    next();
+  }
 });
