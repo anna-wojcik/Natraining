@@ -5,10 +5,12 @@ header.header
       span SportCenter
   nav.nav 
     if user 
-      a.nav__el.nav__el--logout Log out 
+      a.nav__el.nav__el--logout
+        span.nav__text Log out 
+        img.nav__icon(src="/img/logout.svg" alt="Log out")
       a.nav__user(href='/me')
         img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.name}`)
-        span= user.name.split(' ')[0]
+        span.nav__user--name= user.name.split(' ')[0]
     else 
       a.nav__el.nav__el--login(href='/login') Log in 
       //- a.nav__el.nav__el--signup(href='/signup') Sign up

@@ -80,6 +80,9 @@ body {
   padding: 0 20px;
   text-decoration: none;
 }
+.nav__icon {
+  display: none;
+}
 
 .nav__el--login {
   background: #2188FF;
@@ -854,6 +857,9 @@ body {
     height: 24px;
     width: 24px;
   }
+  .nav__user--name {
+    display: none;
+  }
   .nav__el-logo {
     font-size: 20px;
     gap: 4px;
@@ -866,6 +872,14 @@ body {
     font-weight: 400;
     height: 24px;
     padding: 0 10px;
+  }
+  .nav__text {
+    display: none;
+  }
+  .nav__icon {
+    display: inline;
+    width: 16px;
+    height: 16px;
   }
 
   /* OVERVIEW */
