@@ -199,6 +199,7 @@ body {
   display: flex;
   justify-content: space-between;
   background: white;
+  gap: 20px;
   border-radius: 10px;
   padding: 30px;
 }
@@ -279,6 +280,7 @@ body {
   color: white;
   text-decoration: none;
   height: 34px;
+  width: 160px;
   padding: 8px 10px;
   border-radius: 6px;
   font-weight: 400;
@@ -286,6 +288,7 @@ body {
   display: flex;
   align-items: center;
   text-align: center;
+  justify-content: center;
 }
 .card__btn:hover {
   background: hsl(212, 77%, 41%);
@@ -748,6 +751,7 @@ body {
   }
   .card__btn {
     height: 32px;
+    width: 140px;
     font-size: 14px;
   }
 
@@ -1011,6 +1015,7 @@ body {
   }
   .card__btn {
     max-height: 24px;
+    width: 120px;
     padding: 4px 8px;
     font-size: 12px;
   }
