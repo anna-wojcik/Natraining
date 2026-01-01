@@ -45,7 +45,7 @@ const trainingSchema = new mongoose.Schema(
       trim: true,
       enum: {
         values: ["Beginer", "Intermediate", "Advanced"],
-        message: "Level is either: easy, medium, difficult",
+        message: "Level is either: Beginer, Intermediate, Advanced",
       },
     },
     ratingsAverage: {
