@@ -792,6 +792,7 @@ body {
   .main {
     padding: 20px 50px;
     gap: 15px;
+    flex: 1;
   }
   .hero {
     gap: 12px;
