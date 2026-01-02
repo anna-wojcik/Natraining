@@ -1,0 +1,104 @@
+//- extends base 
+
+//- mixin navItem(link, text, icon, active) 
+//-   li(class=`side-nav__item ${active ? 'side-nav__item--active' : ''}`)
+//-     a(href=link)
+//-       img.side-nav__icon(href=`/img/${icon}.svg`)
+//-       span= text
+
+//- block content 
+//-   main.main
+//-     .user-view 
+//-       nav.user-view__menu 
+//-         ul.side-nav
+//-           +navItem("/me", "Settings", "setting", true) 
+//-           if (user.role === "user") 
+//-             +navItem("/my-trainings", "My Bookings", "calendare", false) 
+//-             +navItem("/my-reviews", "My Reviews", "star", false)
+//-           if (user && user.role === "trainer")
+//-             +navItem("/my-trainings", "My Trainings", "calendare", false) 
+        
+extends base
+
+mixin navItem(link, text, icon, active)
+  li(class=`side-nav__item ${active ? 'side-nav__item--active' : ''}`)
+    a.side-nav__link(href=link)
+      img.side-nav__icon(src=`/img/${icon}.svg`)
+      span= text
+
+block content
+  main.main
+    .user-profile
+      .user-profile__sidebar
+        .profile-card
+          .profile-card__header
+            img.profile-card__img(src=`/img/users/${user.photo}`, alt=`Photo of ${user.name}`)
+            h3.profile-card__name= user.name
+            p.profile-card__email= user.email
+
+        nav.profile-nav
+          ul.side-nav
+            +navItem('#', 'Settings', 'setting', true)
+
+            if (user.role === 'user')
+              +navItem('#', 'My bookings', 'calendare')
+              +navItem('#', 'My reviews', 'star-black')
+              +navItem('#', 'Billing', 'credit-card')
+
+          if (user.role === 'trainer')
+            .admin-nav
+              h5.admin-nav__heading Trainer Panel
+              ul.side-nav
+                +navItem('#', 'My Schedule', 'calendare')
+
+          if (user.role === 'admin')
+            .admin-nav
+              h5.admin-nav__heading Admin Panel
+              ul.side-nav
+                +navItem('#', 'Manage trainings', 'calendare')
+                +navItem('#', 'Manage users', 'people')
+                +navItem('#', 'Manage reviews', 'star-black')
+                +navItem('#', 'Manage bookings', 'credit-card')
+
+      .user-profile__content
+        .form-card
+          form.form.form-user-data
+            .form-card__header
+              h2.heading-secondary Personal Information
+              button.form-card__button Save Changes
+            .form__grid.form__grid--one-column
+              .form__group
+                label.form__label(for='name') Name
+                input#name.form__input(type='text', value=user.name, required)
+                span.form__error.hidden.name-error Fullname must be in range 3-40 characters
+              .form__group
+                label.form__label(for='email') Email address
+                input#email.form__input(type='email', value=user.email, required)
+                span.form__error.hidden.email-error Please provide a valid email address
+            
+            .form__group.form__photo-upload
+              img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
+              input.form__input.form__upload(type='file', accept='image/*', id='photo', name='photo')
+              label(for='photo') Choose new photo
+              span.form__error.hidden.photo-error Invalid file extension 
+        .form-card
+          form.form.form-user-password
+            .form-card__header
+              h2.heading-secondary Security
+              button.form-card__button Change Password
+            .form__group
+              label.form__label(for='password-current') Current password
+              input#password-current.form__input(type='password', placeholder='••••••••', required)
+              span.form__error.hidden.passwordCurrent-error Invalid password
+              
+            .form__grid
+              .form__group
+                label.form__label(for='password') New password
+                input#password.form__input(type='password', placeholder='••••••••', required)
+                span.form__error.hidden.password-error Password must be at least 8 characters
+              .form__group
+                label.form__label(for='password-confirm') Confirm password
+                input#password-confirm.form__input(type='password', placeholder='••••••••', required)
+                span.form__error.hidden.passwordConfirm-error Password confirm must be the same as password
+
+          
