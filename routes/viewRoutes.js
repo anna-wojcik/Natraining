@@ -11,6 +11,6 @@ router.get("/trainings/:slug", viewController.getTraining);
 
 router.get("/login", viewController.getLoginForm);
 router.get("/signup", viewController.getSignupForm);
-router.get("/me", viewController.getMe);
+router.get("/me", authController.protect, viewController.getAccount);
 
 module.exports = router;

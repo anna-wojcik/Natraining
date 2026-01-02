@@ -2,12 +2,16 @@ import "@babel/polyfill";
 import { login } from "./login.js";
 import { logout } from "./logout.js";
 import { signup } from "./signup.js";
+import { regexName, regexEmail } from "./regex.js";
+import { updateSettings } from "./updateSettings.js";
 
 // DOM ELEMENTS
 const filterForm = document.querySelector(".filters-form");
 const loginForm = document.querySelector(".form--login");
 const logOutBtn = document.querySelector(".nav__el--logout");
 const signupForm = document.querySelector(".form--signup ");
+const userDataForm = document.querySelector(".form-user-data");
+const userPasswordForm = document.querySelector(".form-user-password");
 
 if (filterForm) {
   filterForm.addEventListener("submit", (event) => {
@@ -99,8 +103,6 @@ if (signupForm) {
     );
 
     let isError = false;
-    const regexName = /^[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ\s-]+$/;
-    const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
     if (name.length < 3 || name.length > 40 || !isValidField(regexName, name)) {
       nameError.classList.remove("hidden");
@@ -127,9 +129,88 @@ if (signupForm) {
       passwordConfirmError.classList.add("hidden");
     }
 
-    console.log("dane:", name, email, password, passwordConfirm);
     if (isError) return;
 
     signup(name, email, password, passwordConfirm);
+  });
+}
+
+if (userDataForm) {
+  userDataForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    const nameError = document.querySelector(".name-error");
+    const emailError = document.querySelector(".email-error");
+
+    let isError = false;
+
+    if (name.length < 3 || name.length > 40 || !isValidField(regexName, name)) {
+      nameError.classList.remove("hidden");
+      isError = true;
+    } else {
+      nameError.classList.add("hidden");
+    }
+    if (!isValidField(regexEmail, email)) {
+      emailError.classList.remove("hidden");
+      isError = true;
+    } else {
+      emailError.classList.add("hidden");
+    }
+
+    if (isError) return;
+
+    updateSettings({ name, email }, "data");
+  });
+}
+
+if (userPasswordForm) {
+  userPasswordForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const passwordCurrent = document
+      .getElementById("passwordCurrent")
+      .value.trim();
+    const password = document.getElementById("password").value.trim();
+    const passwordConfirm = document
+      .getElementById("passwordConfirm")
+      .value.trim();
+
+    const passwordError = document.querySelector(".password-error");
+    const passwordConfirmError = document.querySelector(
+      ".passwordConfirm-error"
+    );
+
+    let isError = false;
+
+    if (password.length < 8) {
+      passwordError.classList.remove("hidden");
+      isError = true;
+    } else {
+      passwordError.classList.add("hidden");
+    }
+    if (passwordConfirm !== password) {
+      passwordConfirmError.classList.remove("hidden");
+      isError = true;
+    } else {
+      passwordConfirmError.classList.add("hidden");
+    }
+
+    if (isError) return;
+
+    const updatePasswordBtn = (document.querySelector(
+      ".btn--update-password"
+    ).innerHTML = "Updating...");
+
+    await updateSettings(
+      { passwordCurrent, password, passwordConfirm },
+      "password"
+    );
+    updatePasswordBtn.innerHTML = "Change Password";
+    document.getElementById("passwordCurrent").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("passwordConfirm").value = "";
   });
 }
