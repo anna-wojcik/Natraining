@@ -1,0 +1,10 @@
+extends base
+
+block content 
+  main.main
+    .error
+      img.error__img(src="/img/danger.svg" alt="Danger icon")
+      .error__wrapper
+        h2.error__title Uh oh! Something went wrong...   
+        p.error__msg= msg
+        a.error__link(href="/") Back to home page
