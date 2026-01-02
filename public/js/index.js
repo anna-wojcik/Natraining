@@ -141,9 +141,11 @@ if (userDataForm) {
 
     const name = document.getElementById("name").value.trim();
     const email = document.getElementById("email").value.trim();
+    const photo = document.getElementById("photo").files[0];
 
     const nameError = document.querySelector(".name-error");
     const emailError = document.querySelector(".email-error");
+    const photoError = document.querySelector(".photo-error");
 
     let isError = false;
 
@@ -160,9 +162,20 @@ if (userDataForm) {
       emailError.classList.add("hidden");
     }
 
-    if (isError) return;
+    if (photo && !photo.type.startsWith("image/")) {
+      photoError.classList.remove("hidden");
+      isError = true;
+    } else {
+      photoError.classList.add("hidden");
+    }
 
-    updateSettings({ name, email }, "data");
+    if (isError) return;
+    const form = new FormData();
+    form.append("name", name);
+    form.append("email", email);
+    form.append("photo", photo);
+
+    updateSettings(form, "data");
   });
 }
 
