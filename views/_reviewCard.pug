@@ -6,5 +6,5 @@ mixin reviewCard(review)
         span= review.user.name 
         .review-rating 
           each star in [1, 2, 3, 4, 5]
-            img.review-star(src=`/img/star${training.ratingsAverage >= star ? '' : 'Inactive'}.svg` alt="star")
+            img.review-star(src=`/img/star${review.rating >= star ? '' : 'Inactive'}.svg` alt="star")
       p.review-description= review.review
