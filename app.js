@@ -15,6 +15,7 @@ const reviewRouter = require("./routes/reviewRoutes");
 const roomRouter = require("./routes/roomRoutes");
 const userRouter = require("./routes/userRoutes");
 const viewRouter = require("./routes/viewRoutes");
+const bookingRouter = require("./routes/bookingRoutes");
 
 const app = express();
 
@@ -25,7 +26,50 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Set Security HTTP headers
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'", "data:", "blob:", "https:", "ws:"],
+        baseUri: ["'self'"],
+        fontSrc: ["'self'", "https:", "data:"],
+        scriptSrc: [
+          "'self'",
+          "https:",
+          "http:",
+          "blob:",
+          "https://js.stripe.com",
+          "https://m.stripe.network",
+          "*.cloudflare.com",
+        ],
+        frameSrc: [
+          "'self'",
+          "https://js.stripe.com",
+          "https://hooks.stripe.com",
+        ],
+        objectSrc: ["'none'"],
+        styleSrc: ["'self'", "https:", "'unsafe-inline'"],
+        workerSrc: ["'self'", "blob:", "https://m.stripe.network"],
+        childSrc: ["blob:"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        formAction: ["'self'"],
+        connectSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "data:",
+          "blob:",
+          "https://*.stripe.com",
+          "https://*.mapbox.com",
+          "https://*.cloudflare.com/",
+          "https://bundle.js:*",
+          "ws://127.0.0.1:*/",
+          "ws://localhost:*/",
+        ],
+        upgradeInsecureRequests: [],
+      },
+    },
+  })
+);
 
 // Development logging
 if (process.env.NODE_ENV === "development") {
@@ -77,6 +121,7 @@ app.use("/api/v1/trainings", trainingRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/rooms", roomRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/bookings", bookingRouter);
 
 app.use("/", viewRouter);
 

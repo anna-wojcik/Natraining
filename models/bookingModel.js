@@ -4,12 +4,12 @@ const bookingSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: [true, 'A Booking must belong to a User.'],
+    required: [true, "A Booking must belong to a User."],
   },
   training: {
     type: mongoose.Schema.ObjectId,
     ref: "Training",
-    required: [true, 'A Booking must belong to a Training.'],
+    required: [true, "A Booking must belong to a Training."],
   },
   price: {
     type: Number,
@@ -23,6 +23,14 @@ const bookingSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+});
+
+bookingSchema.pre(/^find/, function (next) {
+  this.populate("user").populate({
+    path: "training",
+    select: "name",
+  });
+  next();
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);

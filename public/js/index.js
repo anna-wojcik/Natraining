@@ -5,6 +5,7 @@ import { signup } from "./signup.js";
 import { regexName, regexEmail } from "./regex.js";
 import { updateSettings } from "./updateSettings.js";
 import { modifyReview } from "./modifyReviews.js";
+import { bookTraining } from "./stripe.js";
 
 // DOM ELEMENTS
 const filterForm = document.querySelector(".filters-form");
@@ -14,6 +15,7 @@ const signupForm = document.querySelector(".form--signup ");
 const userDataForm = document.querySelector(".form-user-data");
 const userPasswordForm = document.querySelector(".form-user-password");
 const reviewCards = document.querySelectorAll(".review-card");
+const bookButton = document.getElementById("book-training");
 
 if (filterForm) {
   filterForm.addEventListener("submit", (event) => {
@@ -244,7 +246,6 @@ if (reviewCards.length > 0) {
     const btnDelete = reviewCard.querySelector(".btn-delete");
     const reviewTextField = reviewCard.querySelector(".review-input-text");
     const reviewRatingField = reviewCard.querySelector(".review-input-rating");
-    const tempReviewRating = reviewRatingField.value;
 
     if (btnEdit) {
       btnEdit.addEventListener("click", () => {
@@ -252,6 +253,8 @@ if (reviewCards.length > 0) {
         form.classList.remove("hidden");
         btnCancel.classList.remove("hidden");
         btnEdit.classList.add("hidden");
+
+        const tempReviewRating = reviewRatingField.value;
 
         btnCancel.addEventListener("click", (event) => {
           event.preventDefault(); // prevent refreshing the website
@@ -288,6 +291,12 @@ if (reviewCards.length > 0) {
   });
 }
 
-if (reviewCardBtnEdit) {
-  reviewCardBtnEdit.addEventListener("click", () => {});
+if (bookButton) {
+  bookButton.addEventListener("click", () => {
+    bookButton.textContent = "Processing...";
+    const trainingId = bookButton.dataset.trainingId;
+
+    bookTraining(trainingId);
+  });
 }
+

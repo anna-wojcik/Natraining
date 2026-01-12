@@ -59,7 +59,7 @@ block content
                 img.booking-star(src=`/img/star.svg` alt="star")
                 span= `${training.ratingsAverage}/5`
           if user 
-            button.booking__btn#book-training Book training 
+            button.booking__btn#book-training(data-training-id=`${training.id}`) Book training 
           else 
             a.booking__btn(href='/login') Log in to <br/> book training
           
