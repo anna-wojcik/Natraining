@@ -1,10 +1,45 @@
 extends base
 
-mixin navItem(link, text, icon, active)
-  li(class=`side-nav__item ${active ? 'side-nav__item--active' : ''}`)
+mixin navItem(link, text, icon, currentKey)
+  li(class=`side-nav__item ${activePage === currentKey ? 'side-nav__item--active' : ''}`)
     a.side-nav__link(href=link)
       img.side-nav__icon(src=`/img/${icon}.svg`)
       span= text
+
+mixin reviewCard(review)
+  .review-card.review-card--no-shadow(data-review-id=review._id) 
+    img.review-user-img(src=`/img/trainings/${review.training.imageCover}`)
+    .review-info
+      .review-heading.review-heading--space-between
+        span= review.training.name 
+        button.review-card__button.review-card__button--edit(title="Edit review")
+          img.review-icon(src='/img/edit.svg' alt='Edit')
+        button.review-card__button.btn-cancel.hidden(title="Cancel updates")
+            img.review-icon(src='/img/cancel.svg' alt='Cancel')
+      .review-rating 
+        each star in [1, 2, 3, 4, 5]
+          img.review-star(src=`/img/star${review.rating >= star ? '' : 'Inactive'}.svg` alt="star")
+      span.review-card__date= review.createdAt.toLocaleString('en-US', {day: 'numeric', month: 'long', year: 'numeric'})
+      p.review-description= review.review
+
+      form.review-edit-form.hidden
+        .filters-box.filters-box--one-column 
+          .filters-group
+            label.filters-label(for="reviewText") Review
+            input.form__input.review-input-text(type='text' name="review" value=review.review)
+
+          .filters-group
+            label.filters-label(for="reviewRating") Rating
+            select.form__input.review-input-rating(name="rating") 
+              option(value="1" selected=review.rating==1) 1
+              option(value="2" selected=review.rating==2) 2
+              option(value="3" selected=review.rating==3) 3
+              option(value="4" selected=review.rating==4) 4
+              option(value="5" selected=review.rating==5) 5
+
+        .review-edit-actions
+          button.btn-action.btn-update(title="Update review") Update
+          button.btn-action.btn-delete(title="Delete review") Delete
 
 block content
   main.main
@@ -18,67 +53,85 @@ block content
 
         nav.profile-nav
           ul.side-nav
-            +navItem('#', 'Settings', 'setting', true)
+            +navItem('/me', 'Settings', 'settings', 'settings')
 
             if (user.role === 'user')
-              +navItem('#', 'My bookings', 'calendare')
-              +navItem('#', 'My reviews', 'star-black')
-              +navItem('#', 'Billing', 'credit-card')
+              +navItem('#', 'My bookings', 'calendare', 'bookings')
+              +navItem('/my-reviews', 'My reviews', 'star-black', 'reviews')
+              +navItem('#', 'Billing', 'credit-card', 'billing')
 
           if (user.role === 'trainer')
             .admin-nav
               h5.admin-nav__heading Trainer Panel
               ul.side-nav
-                +navItem('#', 'My Schedule', 'calendare')
+                +navItem('#', 'My Schedule', 'calendare', 'trainings')
 
           if (user.role === 'admin')
             .admin-nav
               h5.admin-nav__heading Admin Panel
               ul.side-nav
-                +navItem('#', 'Manage trainings', 'calendare')
-                +navItem('#', 'Manage users', 'people')
-                +navItem('#', 'Manage reviews', 'star-black')
-                +navItem('#', 'Manage bookings', 'credit-card')
+                +navItem('#', 'Manage trainings', 'calendare', 'trainings')
+                +navItem('#', 'Manage users', 'people', 'users')
+                +navItem('#', 'Manage reviews', 'star-black', 'reviews')
+                +navItem('#', 'Manage bookings', 'credit-card', 'bookings')
 
       .user-profile__content
-        .form-card
-          form.form.form-user-data
-            .form-card__header
-              h2.heading-secondary Personal Information
-              button.form-card__button Save Changes
-            .form__grid.form__grid--one-column
-              .form__group
-                label.form__label(for='name') Fullname
-                input#name.form__input(type='text', value=user.name, name='name', required)
-                span.form__error.hidden.name-error Fullname must be in range 3-40 characters
-              .form__group
-                label.form__label(for='email') Email address
-                input#email.form__input(type='email', value=user.email, name='email', required)
-                span.form__error.hidden.email-error Please provide a valid email address
-            
-              .form__group.form__photo-upload
-                img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
-                input.form__input.form__upload(type='file', accept='image/*', id='photo', name='photo')
-                label(for='photo') Choose new photo
-                span.form__error.hidden.photo-error Please upload an image
-        .form-card
-          form.form.form-user-password
-            .form-card__header
-              h2.heading-secondary Security
-              button.form-card__button.btn--update-password Change Password
-            .form__group
-              label.form__label(for='passwordCurrent') Current password *
-              input#passwordCurrent.form__input(type='password', placeholder='••••••••', name='passwordCurrent' required)
-              span.form__error.hidden.passwordCurrent-error Invalid password
+        case activePage 
+          when 'settings'
+            .form-card
+              form.form.form-user-data
+                .form-card__header
+                  h2.heading-secondary Personal Information
+                  button.form-card__button Save Changes
+                .form__grid.form__grid--one-column
+                  .form__group
+                    label.form__label(for='name') Fullname
+                    input#name.form__input(type='text', value=user.name, name='name', required)
+                    span.form__error.hidden.name-error Fullname must be in range 3-40 characters
+                  .form__group
+                    label.form__label(for='email') Email address
+                    input#email.form__input(type='email', value=user.email, name='email', required)
+                    span.form__error.hidden.email-error Please provide a valid email address
+                
+                  .form__group.form__photo-upload
+                    img.form__user-photo(src=`/img/users/${user.photo}`, alt='User photo')
+                    input.form__input.form__upload(type='file', accept='image/*', id='photo', name='photo')
+                    label(for='photo') Choose new photo
+                    span.form__error.hidden.photo-error Please upload an image
+            .form-card
+              form.form.form-user-password
+                .form-card__header
+                  h2.heading-secondary Security
+                  button.form-card__button.btn--update-password Change Password
+                .form__group
+                  label.form__label(for='passwordCurrent') Current password *
+                  input#passwordCurrent.form__input(type='password', placeholder='••••••••', name='passwordCurrent' required)
+                  span.form__error.hidden.passwordCurrent-error Invalid password
+                  
+                .form__grid
+                  .form__group
+                    label.form__label(for='password') New password *
+                    input#password.form__input(type='password', placeholder='••••••••', name='password', required)
+                    span.form__error.hidden.password-error Password must be at least 8 characters
+                  .form__group
+                    label.form__label(for='passwordConfirm') Confirm password *
+                    input#passwordConfirm.form__input(type='password', placeholder='••••••••', name='passwordConfirm', required)
+                    span.form__error.hidden.passwordConfirm-error Password confirm must be the same as password
+        
+          when 'reviews'
+            .form-card
+              .form-card__header
+                h2.heading-secondary My Reviews
+                span.badge= `${reviews.length} opinions`
               
-            .form__grid
-              .form__group
-                label.form__label(for='password') New password *
-                input#password.form__input(type='password', placeholder='••••••••', name='password', required)
-                span.form__error.hidden.password-error Password must be at least 8 characters
-              .form__group
-                label.form__label(for='passwordConfirm') Confirm password *
-                input#passwordConfirm.form__input(type='password', placeholder='••••••••', name='passwordConfirm', required)
-                span.form__error.hidden.passwordConfirm-error Password confirm must be the same as password
+              .reviews-list
+                if reviews.length > 0
+                  each review in reviews
+                    +reviewCard(review)
+                else
+                  p.no-results You haven't added any reviews yet.
+
+          default 
+            h2 No page found
 
           
