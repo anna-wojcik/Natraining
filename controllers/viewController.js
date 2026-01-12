@@ -79,3 +79,13 @@ exports.getMyTrainings = catchAsync(async (req, res, next) => {
     trainings,
   });
 });
+
+exports.getAllTrainings = catchAsync(async (req, res, next) => {
+  const trainings = await Training.find();
+
+  res.status(200).render("account", {
+    title: "Manage trainings",
+    activePage: "manage-trainings",
+    trainings,
+  });
+});

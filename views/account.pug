@@ -71,7 +71,7 @@ block content
             .admin-nav
               h5.admin-nav__heading Admin Panel
               ul.side-nav
-                +navItem('#', 'Manage trainings', 'calendare', 'trainings')
+                +navItem('/manage-trainings', 'Manage trainings', 'calendare', 'trainings')
                 +navItem('#', 'Manage users', 'people', 'users')
                 +navItem('#', 'Manage reviews', 'star-black', 'reviews')
                 +navItem('#', 'Manage bookings', 'credit-card', 'bookings')
@@ -144,6 +144,19 @@ block content
                     +trainingCard(training)
                 else
                   p.no-results You haven't booked any trainings yet.
+          
+          when 'manage-trainings'
+            .form-card 
+              .form-card__header
+                h2.heading-secondary Manage trainings
+                span.badge= `${trainings.length} trainings`
+
+              .card-container 
+                if trainings.length > 0
+                  each training in trainings
+                    +trainingCard(training)
+                else
+                  p.no-results There's no training yet.
 
           default 
             h2 No page found

@@ -7,7 +7,11 @@ const router = express.Router();
 
 router.use(authController.isLoggedIn);
 
-router.get("/", bookingController.createBookingCheckout, viewController.getOverview);
+router.get(
+  "/",
+  bookingController.createBookingCheckout,
+  viewController.getOverview
+);
 router.get("/trainings/:slug", viewController.getTraining);
 
 router.get("/login", viewController.getLoginForm);
@@ -18,4 +22,10 @@ router.use(authController.protect);
 router.get("/me", viewController.getAccount);
 router.get("/my-reviews", viewController.getMyReviews);
 router.get("/my-trainings", viewController.getMyTrainings);
+router.get(
+  "/manage-trainings",
+  authController.restrictTo("admin"),
+  viewController.getAllTrainings
+);
+
 module.exports = router;
