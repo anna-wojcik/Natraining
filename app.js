@@ -73,12 +73,12 @@ app.use((req, res, next) => {
 });
 
 // ROUTES
-app.use("/", viewRouter);
-
 app.use("/api/v1/trainings", trainingRouter);
 app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/rooms", roomRouter);
 app.use("/api/v1/users", userRouter);
+
+app.use("/", viewRouter);
 
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

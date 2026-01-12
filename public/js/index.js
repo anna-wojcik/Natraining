@@ -4,6 +4,7 @@ import { logout } from "./logout.js";
 import { signup } from "./signup.js";
 import { regexName, regexEmail } from "./regex.js";
 import { updateSettings } from "./updateSettings.js";
+import { modifyReview } from "./modifyReviews.js";
 
 // DOM ELEMENTS
 const filterForm = document.querySelector(".filters-form");
@@ -12,6 +13,7 @@ const logOutBtn = document.querySelector(".nav__el--logout");
 const signupForm = document.querySelector(".form--signup ");
 const userDataForm = document.querySelector(".form-user-data");
 const userPasswordForm = document.querySelector(".form-user-password");
+const reviewCards = document.querySelectorAll(".review-card");
 
 if (filterForm) {
   filterForm.addEventListener("submit", (event) => {
@@ -226,4 +228,66 @@ if (userPasswordForm) {
     document.getElementById("password").value = "";
     document.getElementById("passwordConfirm").value = "";
   });
+}
+
+if (reviewCards.length > 0) {
+  reviewCards.forEach((reviewCard) => {
+    // Review Id got from data atribute (added in PUG)
+    const reviewId = reviewCard.dataset.reviewId;
+
+    const btnEdit = reviewCard.querySelector(".review-card__button--edit");
+    const form = reviewCard.querySelector(".review-edit-form");
+    const reviewDescription = reviewCard.querySelector(".review-description");
+
+    const btnCancel = reviewCard.querySelector(".btn-cancel");
+    const btnUpdate = reviewCard.querySelector(".btn-update");
+    const btnDelete = reviewCard.querySelector(".btn-delete");
+    const reviewTextField = reviewCard.querySelector(".review-input-text");
+    const reviewRatingField = reviewCard.querySelector(".review-input-rating");
+    const tempReviewRating = reviewRatingField.value;
+
+    if (btnEdit) {
+      btnEdit.addEventListener("click", () => {
+        reviewDescription.classList.add("hidden");
+        form.classList.remove("hidden");
+        btnCancel.classList.remove("hidden");
+        btnEdit.classList.add("hidden");
+
+        btnCancel.addEventListener("click", (event) => {
+          event.preventDefault(); // prevent refreshing the website
+          form.classList.add("hidden");
+          reviewDescription.classList.remove("hidden");
+          btnCancel.classList.add("hidden");
+          btnEdit.classList.remove("hidden");
+
+          reviewTextField.value = reviewDescription.textContent;
+          reviewRatingField.value = tempReviewRating;
+        });
+
+        // updating review
+        btnUpdate.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          const reviewText = reviewTextField.value.trim();
+          const reviewRating = reviewRatingField.value;
+          if (reviewText !== "") {
+            modifyReview({
+              id: reviewId,
+              data: { review: reviewText, rating: reviewRating },
+              type: "update",
+            });
+          }
+        });
+
+        btnDelete.addEventListener("click", (event) => {
+          event.preventDefault();
+          modifyReview({ id: reviewId, type: "delete" });
+        });
+      });
+    }
+  });
+}
+
+if (reviewCardBtnEdit) {
+  reviewCardBtnEdit.addEventListener("click", () => {});
 }

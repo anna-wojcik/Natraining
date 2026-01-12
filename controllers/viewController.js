@@ -1,3 +1,4 @@
+const Review = require("../models/reviewModel");
 const Training = require("../models/trainingModel");
 const APIFeatures = require("../utils/apiFeatures");
 const AppError = require("../utils/appError");
@@ -46,5 +47,19 @@ exports.getSignupForm = catchAsync(async (req, res, next) => {
 exports.getAccount = catchAsync(async (req, res, next) => {
   res.status(200).render("account", {
     title: "Your account",
+    activePage: "settings",
+  });
+});
+
+exports.getMyReviews = catchAsync(async (req, res, next) => {
+  const reviews = await Review.find({ user: req.user.id }).populate({
+    path: "training",
+    select: "-__v",
+  });
+
+  res.status(200).render("account", {
+    title: "My Reviews",
+    activePage: "reviews",
+    reviews,
   });
 });
