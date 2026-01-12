@@ -17,5 +17,5 @@ router.use(authController.protect);
 
 router.get("/me", viewController.getAccount);
 router.get("/my-reviews", viewController.getMyReviews);
-
+router.get("/my-trainings", viewController.getMyTrainings);
 module.exports = router;

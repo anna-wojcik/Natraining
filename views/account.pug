@@ -1,4 +1,5 @@
 extends base
+include _trainingCardTemplate
 
 mixin navItem(link, text, icon, currentKey)
   li(class=`side-nav__item ${activePage === currentKey ? 'side-nav__item--active' : ''}`)
@@ -56,7 +57,7 @@ block content
             +navItem('/me', 'Settings', 'settings', 'settings')
 
             if (user.role === 'user')
-              +navItem('#', 'My bookings', 'calendare', 'bookings')
+              +navItem('/my-trainings', 'My trainings', 'calendare', 'trainings')
               +navItem('/my-reviews', 'My reviews', 'star-black', 'reviews')
               +navItem('#', 'Billing', 'credit-card', 'billing')
 
@@ -130,6 +131,19 @@ block content
                     +reviewCard(review)
                 else
                   p.no-results You haven't added any reviews yet.
+          
+          when 'trainings'
+            .form-card 
+              .form-card__header
+                h2.heading-secondary My trainings
+                span.badge= `${trainings.length} trainings`
+
+              .card-container 
+                if trainings.length > 0
+                  each training in trainings
+                    +trainingCard(training)
+                else
+                  p.no-results You haven't booked any trainings yet.
 
           default 
             h2 No page found
