@@ -27,5 +27,10 @@ router.get(
   authController.restrictTo("admin"),
   viewController.getAllTrainings
 );
+router.get(
+  "/manage-reviews",
+  authController.restrictTo("admin"),
+  viewController.getAllReviews
+);
 
 module.exports = router;

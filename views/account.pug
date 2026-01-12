@@ -71,9 +71,9 @@ block content
             .admin-nav
               h5.admin-nav__heading Admin Panel
               ul.side-nav
-                +navItem('/manage-trainings', 'Manage trainings', 'calendare', 'trainings')
+                +navItem('/manage-trainings', 'Manage trainings', 'calendare', 'manage-trainings')
                 +navItem('#', 'Manage users', 'people', 'users')
-                +navItem('#', 'Manage reviews', 'star-black', 'reviews')
+                +navItem('/manage-reviews', 'Manage reviews', 'star-black', 'manage-reviews')
                 +navItem('#', 'Manage bookings', 'credit-card', 'bookings')
 
       .user-profile__content
@@ -157,6 +157,19 @@ block content
                     +trainingCard(training)
                 else
                   p.no-results There's no training yet.
+
+          when 'manage-reviews'
+            .form-card
+              .form-card__header
+                h2.heading-secondary Manage Reviews
+                span.badge= `${reviews.length} opinions`
+              
+              .reviews-list
+                if reviews.length > 0
+                  each review in reviews
+                    +reviewCard(review)
+                else
+                  p.no-results There's no review yet.
 
           default 
             h2 No page found

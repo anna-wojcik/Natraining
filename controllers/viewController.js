@@ -89,3 +89,14 @@ exports.getAllTrainings = catchAsync(async (req, res, next) => {
     trainings,
   });
 });
+
+exports.getAllReviews = catchAsync(async (req, res, next) => {
+  const reviewsAll = await Review.find().populate("training");
+  const reviews = reviewsAll.filter((review) => review.training !== null);
+
+  res.status(200).render("account", {
+    title: "Manage reviews",
+    activePage: "manage-reviews",
+    reviews,
+  });
+});
