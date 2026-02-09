@@ -8,7 +8,7 @@ The application was built using **Node.js**, **Express**, **MongoDB**, and the *
     * [Home page](#home-page)
     * [Training details page](#training-details-page)
     * [User account page](#user-account-page)
-    * [Login & Signup page](#login-&-signup-page)  
+    * [Login Signup page](#login-signup-page)  
 * [Technologies Used](#technologies-used)
 * [Available Scripts](#available-scripts)
 * [Author](#author)
@@ -63,7 +63,7 @@ The account panel is dynamically adjusted to the role of the logged in user (Use
 
   - Manage Bookings: in the future, a preview of all reservations and payment statuses will be implemented.
 
-### Login & Signup page
+### Login Signup page
 Module responsible for security and access to the system.
 - Signup: Account creation form requiring name and surname, email and passwords (with its confirmation). The data is validated and the password is securely hashed (bcryptjs) before being written to the MongoDB database.
   <img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/4b9361d2-69d7-4917-aa4a-bd86c0034026" />
