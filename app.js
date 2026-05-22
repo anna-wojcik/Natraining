@@ -7,6 +7,7 @@ const mongoSanitize = require("express-mongo-sanitize");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
@@ -19,6 +20,14 @@ const bookingRouter = require("./routes/bookingRoutes");
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true, // Allows to send cookies containing JWT
+  }),
+);
+
+// Engine for generating emails
 app.set("view engine", "pug"); // template engine - pug
 app.set("views", path.join(__dirname, "views"));
 
@@ -26,50 +35,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Set Security HTTP headers
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'", "data:", "blob:", "https:", "ws:"],
-        baseUri: ["'self'"],
-        fontSrc: ["'self'", "https:", "data:"],
-        scriptSrc: [
-          "'self'",
-          "https:",
-          "http:",
-          "blob:",
-          "https://js.stripe.com",
-          "https://m.stripe.network",
-          "*.cloudflare.com",
-        ],
-        frameSrc: [
-          "'self'",
-          "https://js.stripe.com",
-          "https://hooks.stripe.com",
-        ],
-        objectSrc: ["'none'"],
-        styleSrc: ["'self'", "https:", "'unsafe-inline'"],
-        workerSrc: ["'self'", "blob:", "https://m.stripe.network"],
-        childSrc: ["blob:"],
-        imgSrc: ["'self'", "data:", "blob:"],
-        formAction: ["'self'"],
-        connectSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "data:",
-          "blob:",
-          "https://*.stripe.com",
-          "https://*.mapbox.com",
-          "https://*.cloudflare.com/",
-          "https://bundle.js:*",
-          "ws://127.0.0.1:*/",
-          "ws://localhost:*/",
-        ],
-        upgradeInsecureRequests: [],
-      },
-    },
-  })
-);
+app.use(helmet());
 
 // Development logging
 if (process.env.NODE_ENV === "development") {
@@ -106,7 +72,7 @@ app.use(
       "level",
       "price",
     ],
-  })
+  }),
 );
 
 // Test middleware
@@ -122,8 +88,6 @@ app.use("/api/v1/reviews", reviewRouter);
 app.use("/api/v1/rooms", roomRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/bookings", bookingRouter);
-
-app.use("/", viewRouter);
 
 app.use((req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
