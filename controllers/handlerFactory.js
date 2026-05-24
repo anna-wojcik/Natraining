@@ -7,6 +7,8 @@ exports.getAll = (Model) =>
     let filter = {};
     if (req.params.trainingId) filter = { training: req.params.trainingId };
 
+    const totalResults = await Model.countDocuments(filter);
+
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
       .sort()
@@ -17,7 +19,8 @@ exports.getAll = (Model) =>
 
     res.status(200).json({
       status: "success",
-      results: docs.length,
+      results: totalResults,
+      resultsOnPage: docs.length,
       data: {
         data: docs,
       },
@@ -26,7 +29,11 @@ exports.getAll = (Model) =>
 
 exports.getOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findById(req.params.id);
+    const query = req.params.id.match(/^[0-9a-fA-F]{24}$/)
+      ? { _id: req.params.id }
+      : { slug: req.params.id };
+
+    const doc = await Model.findOne(query);
 
     if (!doc) return next(new AppError("No document found with that ID", 404));
 
