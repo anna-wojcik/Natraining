@@ -15,10 +15,17 @@ const trainingRouter = require("./routes/trainingRoutes");
 const reviewRouter = require("./routes/reviewRoutes");
 const roomRouter = require("./routes/roomRoutes");
 const userRouter = require("./routes/userRoutes");
-const viewRouter = require("./routes/viewRoutes");
 const bookingRouter = require("./routes/bookingRoutes");
+const bookingController = require("./controllers/bookingController");
 
 const app = express();
+
+// Handler needs raw data as String (before express.json() formats it to JSON), data come from Stripe
+app.post(
+  "/webhook-checkout",
+  express.raw({ type: "application/json" }),
+  bookingController.webhookCheckout,
+);
 
 app.use(
   cors({

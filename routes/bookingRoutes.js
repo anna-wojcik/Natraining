@@ -4,10 +4,23 @@ const authController = require("../controllers/authController");
 
 const router = express.Router();
 
-router.get(
-  "/checkout-session/:trainingId",
-  authController.protect,
-  bookingController.getCheckoutSession
-);
+router.use(authController.protect);
+
+// This endpoint comes from frontend
+router
+  .route("/checkout-session/:trainingId")
+  .get(authController.protect, bookingController.getCheckoutSession);
+
+router.use(authController.restrictTo("admin"));
+router
+  .route("/")
+  .get(bookingController.getAllBookings)
+  .post(bookingController.createBooking);
+
+router
+  .route("/:id")
+  .get(bookingController.getBooking)
+  .patch(bookingController.updateBooking)
+  .delete(bookingController.deleteBooking);
 
 module.exports = router;
