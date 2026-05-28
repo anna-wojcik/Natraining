@@ -80,7 +80,23 @@ exports.webhookCheckout = (req, res, next) => {
   res.status(200).json({ received: true });
 };
 
-exports.getAllBookings = factory.getAll(Booking);
+exports.getAllBookings = catchAsync(async (req, res, next) => {
+  let filter = {};
+  console.log("req.user.id", req.user.id);
+  if (req.user.role !== "admin") {
+    filter = { user: req.user.id };
+  }
+
+  const bookings = await Booking.find(filter).populate("training user");
+
+  res.status(200).json({
+    status: "success",
+    results: bookings.length,
+    data: {
+      data: bookings,
+    },
+  });
+});
 exports.getBooking = factory.getOne(Booking);
 exports.createBooking = factory.createOne(Booking);
 exports.updateBooking = factory.updateOne(Booking);

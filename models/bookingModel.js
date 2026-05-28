@@ -26,9 +26,12 @@ const bookingSchema = new mongoose.Schema({
 });
 
 bookingSchema.pre(/^find/, function (next) {
-  this.populate("user").populate({
+  this.populate({
+    path: "user",
+    select: "name email photo role",
+  }).populate({
     path: "training",
-    select: "name",
+    select: "name startDates startTime endTime room trainers price slug",
   });
   next();
 });

@@ -10,12 +10,10 @@ router.use(authController.protect);
 router
   .route("/checkout-session/:trainingId")
   .get(authController.protect, bookingController.getCheckoutSession);
+router.route("/").get(bookingController.getAllBookings);
 
 router.use(authController.restrictTo("admin"));
-router
-  .route("/")
-  .get(bookingController.getAllBookings)
-  .post(bookingController.createBooking);
+router.route("/").post(bookingController.createBooking);
 
 router
   .route("/:id")

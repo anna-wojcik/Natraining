@@ -17,6 +17,7 @@ const trainingSchema = new mongoose.Schema(
     duration: {
       type: Number,
       required: [true, "A Training must have a duration"],
+      min: [1, "Duration must be above 1"],
     },
     trainingType: {
       type: String,
@@ -38,6 +39,7 @@ const trainingSchema = new mongoose.Schema(
     maxGroupSize: {
       type: Number,
       required: [true, "A Training must have a group size"],
+      min: [1, "Group size must be above 1"],
     },
     level: {
       type: String,
@@ -117,7 +119,7 @@ const trainingSchema = new mongoose.Schema(
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
-  }
+  },
 );
 
 // Wirtual Reference
