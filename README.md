@@ -1,75 +1,73 @@
 # 🏋️‍♂️ Natraining - Sports Training Booking App
 
-**Natraining** is a complete Full-Stack web application that allows users to browse, book, and pay for sports training sessions. Administrators and trainers have access to dedicated panels for managing schedules, users, and reviews.
-The application was built using **Node.js**, **Express**, **MongoDB**, and the **Pug** template engine.
+**SportFlow Pro** is an advanced Full-Stack Single Page Application (SPA) that allows users to browse, book, and securely pay for sports training sessions and club classes. The system offers dedicated, independent operational dashboards tailored to the specific privileges of three roles: Client (User), Trainer (Trainer), and Administrator (Admin).
+
+The application architecture is built upon a distributed, stateless **REST API (Node.js + Express.js + MongoDB)** and a dynamic, highly responsive user interface **SPA (React + Redux Toolkit + Redux-Saga)**.
 
 ## Table of Contents
 * [Site Overview](#site-overview)
     * [Home page](#home-page)
-    * [Training details page](#training-details-page)
-    * [User account page](#user-account-page)
+    * [Training Details Page and Stripe Module](#training-details-page-and-stripe-module)
+    * [Training Details Page and Stripe Module](#training-details-page-and-stripe-module)
+    * [User Profile and Settings Panel](#user-profile-and-settings-panel)
+    * [Dedicated Trainer Panel](#dedicated-trainer-panel)
+    * [Global Administrator Panel](#global-administrator-panel)
     * [Login Signup page](#login-signup-page)  
 * [Technologies Used](#technologies-used)
 * [Available Scripts](#available-scripts)
+* [Testing Stripe Webhook](#testing-stripe-webhook)
 * [Author](#author)
 
 ## Site Overview
 The goal of this project was to create a modern e-commerce platform for sports facilities. The application handles the entire business process: from searching for a training session, to secure online payments and profile management.
 
 ### Home page
-Displays a list of available training fetched from the MongoDB database. Training are displayed in a responsive card grid. Each card contains key information that allows users to quickly evaluate the offer: a sample photo, workout name, difficulty level (Beginner/Intermediate/Advanced), duration, number of available spots, rating (stars), and price.
+Displays a comprehensive list of available training sessions fetched asynchronously from the MongoDB database, rendered in a flexible responsive card grid (CSS Grid). Each card contains an optimized cover image, sport type, duration, price, and the database-calculated average rating displayed as a system of visual stars.
+* **Advanced Filtering:** A dynamic filter form above the training list allows users to instantly narrow down search results without reloading the page by: discipline type (Football, Volleyball, Handball, Basketball, Tennis, Hockey), difficulty level (Beginner, Intermediate, Advanced), price range, and a text search bar.
 
-<img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/17fda2fc-00e5-4800-a5bc-55a4902d3375" />
+![alt text](<Zrzut ekranu 2026-05-28 121658.png>)
 
-Above the training list is a filter form that allows you to dynamically refine your search results. The user can filter classes by: 
-- Training Type (Football, Volleyball, Handball, Basketball, Tennis, Hockey),
-- Difficulty Level (Beginner, Intermediate, Advanced),
-- Price Range,
-- Names (text search).
+### Training Details Page and Stripe Module
+Presents extended specifications of the training session, including the relationally linked room and the profiles of the trainers conducting the class.
+* **Reviews Section:** Displays the list of feedback and ratings left by participants.
+* **Stripe Payment Gateway:** After clicking "Book now" (available only to logged-in clients), the Redux-Saga process initiates a secure Stripe Checkout session. The user is redirected to Stripe's encrypted credit card payment form, and subsequently returns to the app with a booking confirmation.
 
-### Training details page
-The website presents detailed information about the selected training session and allows you to make a reservation.
-- Information section: Contains an extended description of the training session, a visualization of the activity type, and detailed information: start date and time, room name, and duration.
-- Trainer information: Displays the profiles of the trainers conducting the session, building trust with the staff.
-- Reviews section: Users can view reviews and ratings from other participants.
-- Reservations and Payments Module (Booking):
-  - Access logic: The reservation button is only visible to logged in users. Those who are not logged in see an incentive to log in.
-  - Integration with Stripe: Clicking "Book training" initiates a secure payment session (Checkout Session). The app communicates with the Stripe API by redirecting the user to a card payment form.
+![alt text](<Zrzut ekranu 2026-05-28 122323.png>)
 
-<img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/90c7ff61-5927-4f51-872c-1e184190082f" />
+### User Profile and Settings Panel
+A common dashboard for all system roles, allowing asynchronous modification of personal information, password changes (secured by verifying the current password), and uploading a new profile picture (processed, cropped, and optimized in the background by Multer and Sharp).
 
-<img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/d2eab73c-f42d-4bf3-be9f-255fda4bbc73" />
+![alt text](<Zrzut ekranu 2026-05-28 122958.png>)
 
-### User account page
-The account panel is dynamically adjusted to the role of the logged in user (User, Trainer, Admin).
-- Common functionalities (Settings):
-  - Data editing: Ability to change name, email address, and upload a new profile picture (processed by Multer and Sharp library).
-  - Password Change: Password change form requiring the current password for verification purposes.
+* **Client (User) - My Bookings:** A list of purchased and upcoming training sessions for the user.
 
-  <img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/4dd47c0b-043c-455b-9622-37321f6f7e95" />
+![alt text](<Zrzut ekranu 2026-05-28 123213.png>)
 
-- Role: User:
-  - My Trainings: List of purchased and upcoming workouts.
-    <img width="960" height="540" alt="obraz" src="https://github.com/user-attachments/assets/472cd37b-aa49-4b1a-8931-66fc198596b6" />
-  - My Reviews: Managing your own opinions. The user can view the reviews he has left, edit their content and rating, and delete them (full CRUD operations on his own resources).
-    <img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/8855e62e-27e0-49cc-9c5d-9fd87ecc5238" />
-- Role: Trainer:
-  - My Schedule: A dedicated schedule view showing the workouts assigned to a given coach.
-- Role: Administrator: The Administrator has an extended side panel that allows you to manage the entire system:
-  - Manage Trainings: Overview of all workouts in the system, with the option to create, edit, and delete them in the future.
-  - Manage Users: User base management will be implemented in the future.
-  - Manage Reviews: Feedback management (full CRUD operations).
-  <img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/db302c8d-ee22-4653-8e09-58ccdfed452e" />
+### Dedicated Trainer Panel
+* **My Schedule:** A modern, clean schedule view in the form of expandable tiles. Trainers can see only their assigned training sessions, hours, designated rooms, and the current group capacity limit in a secure *Read-Only* mode.
 
-  - Manage Bookings: in the future, a preview of all reservations and payment statuses will be implemented.
+![alt text](<Zrzut ekranu 2026-05-28 123612.png>)
+
+### Global Administrator Panel
+An extended, comprehensive control cockpit giving full command over the system via a polished Accordion interface:
+* **Manage Users:** Overview of the registered users database, with the ability to modify system roles (e.g., granting trainer/admin privileges) and activate or deactivate user accounts.
+![alt text](<Zrzut ekranu 2026-05-28 123909.png>)
+![alt text](<Zrzut ekranu 2026-05-28 123921.png>)
+* **Manage Reviews:** Global supervision over all reviews in the system, with the authority to moderate and delete comments that violate terms.
+![alt text](<Zrzut ekranu 2026-05-28 124014.png>)
+![alt text](<Zrzut ekranu 2026-05-28 124030.png>)
+* **Manage Trainings (Full CRUD):** Advanced offers management. Admin can edit existing classes, delete them from the database (secured with a confirmation window), and add new ones through a polished modal. The creation form handles field validation on both the client side and Mongoose (enforcing name uniqueness, string length of 10-40 characters, and enum type safety), asynchronous room assignment, multiple trainers assignment (checkboxes), and a physical cover image file upload.
+![alt text](<Zrzut ekranu 2026-05-28 123717.png>)
+![alt text](<Zrzut ekranu 2026-05-28 123823.png>)
 
 ### Login Signup page
 Module responsible for security and access to the system.
 - Signup: Account creation form requiring name and surname, email and passwords (with its confirmation). The data is validated and the password is securely hashed (bcryptjs) before being written to the MongoDB database.
-  <img width="951" height="535" alt="obraz" src="https://github.com/user-attachments/assets/4b9361d2-69d7-4917-aa4a-bd86c0034026" />
+
+  ![alt text](<Zrzut ekranu 2026-05-28 124242.png>)
 
 - Login: User authentication via email and password. After successful verification, the server generates a JWT (JSON Web Token), which is sent to the browser and stored in a secure httpOnly cookie (protected against access from JavaScript).
-  <img width="837" height="471" alt="obraz" src="https://github.com/user-attachments/assets/0ce15d8d-d05f-44c2-aa3c-908eb544aeb4" />
+  ![alt text](<Zrzut ekranu 2026-05-28 124302.png>)
 
 ## Technologies Used
 ### Backend 
@@ -82,8 +80,11 @@ Module responsible for security and access to the system.
 - Nodemailer (for email sending)
 
 ### Frontend
-- Pug (template engine)
+- React
+- Redux Toolkit
+- Redux Saga
 - Axios (for HTTP request)
+- Styled Components
 - CSS
 - JavaScript ES6
 - BEM Convention
@@ -119,6 +120,13 @@ Watches frontend JavaScript files and rebuilds them into /public/js/bundle.js us
 
 ### `npm run build:js`
 Builds final compressed JavaScript bundle.
+
+## Testing Stripe Webhook
+For the application to correctly receive the event from the Stripe API regarding a successful payment and automatically create a reservation in the database without interrupting the user's session, you must start local webhook forwarding in the terminal using the Stripe CLI:
+
+```bash
+stripe listen --forward-to 127.0.0.1:3000/webhook-checkout
+```
 
 ## Author
 Created by Anna Wójcik.
